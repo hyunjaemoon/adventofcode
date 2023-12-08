@@ -1,7 +1,13 @@
 use std::collections::HashMap;
-use std::fs::File;
-use std::io::{BufRead, BufReader};
-use std::path::PathBuf;
+use std::io::BufRead;
+
+use lazy_static::lazy_static;
+
+use crate::question::Question;
+
+lazy_static! {
+    static ref QUESTION: Question = Question::new(1);
+}
 
 fn find_calibration_value(word: String) -> u32 {
     let mut first_digit: Option<char> = None;
@@ -78,19 +84,9 @@ fn find_calibration_value_with_string(word: String) -> u32 {
     }
 }
 
-fn read_file() -> BufReader<File> {
-    // Open the file for reading
-    let mut file_dir = PathBuf::new();
-    file_dir.push("src");
-    file_dir.push("day1");
-    file_dir.push("input.txt");
-    let file = File::open(file_dir).expect("Failed to open file");
-    BufReader::new(file)
-}
-
 pub fn part1() {
     // Create a buffered reader to read the file
-    let reader = read_file();
+    let reader = QUESTION.read_file();
 
     // Read the file line by line
     let mut answer = 0;
@@ -107,7 +103,7 @@ pub fn part1() {
 
 pub fn part2() {
     // Create a buffered reader to read the file
-    let reader = read_file();
+    let reader = QUESTION.read_file();
 
     // Read the file line by line
     let mut answer = 0;

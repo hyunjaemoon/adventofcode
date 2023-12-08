@@ -1,20 +1,18 @@
-use std::{io::{BufReader, BufRead}, fs::File, path::PathBuf, collections::HashMap};
+use std::{collections::HashMap, io::BufRead};
 
-fn read_file() -> BufReader<File> {
-    // Open the file for reading
-    let mut file_dir = PathBuf::new();
-    file_dir.push("src");
-    file_dir.push("day2");
-    file_dir.push("input.txt");
-    let file = File::open(file_dir).expect("Failed to open file");
-    BufReader::new(file)
+use lazy_static::lazy_static;
+
+use crate::question::Question;
+
+lazy_static! {
+    static ref QUESTION: Question = Question::new(2);
 }
 
 fn parse_line(line: String) -> Vec<HashMap<String, u32>> {
     match line.find(':') {
         Some(idx) => {
             let mut result: Vec<HashMap<String, u32>> = Vec::new();
-            for set in line[idx+2..].split("; ") {
+            for set in line[idx + 2..].split("; ") {
                 let mut map = HashMap::new();
                 for kind in set.split(", ") {
                     let mut value = kind.split(" ");
@@ -26,13 +24,13 @@ fn parse_line(line: String) -> Vec<HashMap<String, u32>> {
             }
             result
         }
-        None => vec![]
+        None => vec![],
     }
 }
 
 pub fn part1() {
     // Create a buffered reader to read the file
-    let reader = read_file();
+    let reader = QUESTION.read_file();
 
     // Max value of each colors
     let standard = HashMap::from([
@@ -58,7 +56,7 @@ pub fn part1() {
                 if success {
                     result += game_idx;
                 }
-            },
+            }
             Err(err) => println!("{err:?}"),
         }
         game_idx += 1;
@@ -68,7 +66,7 @@ pub fn part1() {
 
 pub fn part2() {
     // Create a buffered reader to read the file
-    let reader = read_file();
+    let reader = QUESTION.read_file();
 
     // Read the file line by line
     let mut result = 0;
@@ -82,10 +80,13 @@ pub fn part2() {
             Ok(str) => {
                 for map in parse_line(str) {
                     for (color, value) in &map {
-                        max_values.insert(color.to_string(), std::cmp::max(*value, *max_values.get(color).unwrap()));
+                        max_values.insert(
+                            color.to_string(),
+                            std::cmp::max(*value, *max_values.get(color).unwrap()),
+                        );
                     }
                 }
-            },
+            }
             Err(err) => println!("{err:?}"),
         }
         result += {
