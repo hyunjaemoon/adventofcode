@@ -16,4 +16,8 @@ impl Question {
         file_dir.push("input.txt");
         BufReader::new(File::open(file_dir).expect("Failed to open file"))
     }
+
+    pub fn print_answer(&self, part: u32, answer: u32) {
+        println!("Answer for day {} part {} is {}", self.day, part, answer);
+    }
 }

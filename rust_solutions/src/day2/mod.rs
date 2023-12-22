@@ -61,7 +61,7 @@ pub fn part1() {
         }
         game_idx += 1;
     }
-    println!("Answer is {result}")
+    QUESTION.print_answer(1, result);
 }
 
 pub fn part2() {
@@ -97,5 +97,5 @@ pub fn part2() {
             sub_result
         }
     }
-    println!("Answer is {result}")
+    QUESTION.print_answer(2, result);
 }

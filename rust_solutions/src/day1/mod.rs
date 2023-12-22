@@ -98,7 +98,7 @@ pub fn part1() {
             Err(err) => println!("{err:?}"),
         }
     }
-    println!("Answer is {answer}");
+    QUESTION.print_answer(1, answer);
 }
 
 pub fn part2() {
@@ -115,5 +115,5 @@ pub fn part2() {
             Err(err) => println!("{err:?}"),
         }
     }
-    println!("Answer is {answer}");
+    QUESTION.print_answer(2, answer);
 }
