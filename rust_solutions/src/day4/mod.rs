@@ -64,11 +64,10 @@ pub fn part2() {
         let line_string = line.unwrap()[10..].to_string();
         let (first_half, last_half) = line_parsing(line_string);
         let count = calculate_points(first_half, last_half);
-        for _ in 0..card_numbers.get(&card_number).unwrap().clone() {
-            if count != 0 {
-                for i in 0..count {
-                    *card_numbers.entry(card_number + i + 1).or_insert(0) += 1;
-                }
+        if count != 0 {
+            for i in 0..count {
+                *card_numbers.entry(card_number + i + 1).or_insert(0) +=
+                    card_numbers.get(&card_number).unwrap().clone();
             }
         }
         total_counts += card_numbers.get(&card_number).unwrap();
